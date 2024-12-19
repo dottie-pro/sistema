@@ -165,10 +165,18 @@ const UploadFiles: React.FC = () => {
         };
 
         // Const específica para prints de stories cortados ao meio, para defini-los por posição e identifica-los como story.
-        const positionStories = result.indexOf("visualizacoes");
-        const positionAlcanceStories = result.indexOf("alcance");
-        const storyPartsEspecificsVisualization = result[positionStories + 2].includes('interacoes')
-        const storyPartsEspecificsAlcance = result[positionAlcanceStories + 3].includes('contas') && result[positionAlcanceStories + 4].includes('alcancadas')
+        // const positionStories = result.indexOf("visualizacoes");
+        // const positionAlcanceStories = result.indexOf("alcance");
+
+        // const storyPartsEspecificsVisualization = result[positionStories + 2].includes('interacoes')
+        // const storyPartsEspecificsAlcance = result[positionAlcanceStories + 3].includes('contas') && result[positionAlcanceStories + 4].includes('alcancadas')
+        const positionStories = result.indexOf("visualizacoes") >= 0 ? result.indexOf("visualizacoes") : result.indexOf("views");
+        const positionAlcanceStories = result.indexOf("alcance") >= 0 ? result.indexOf("alcance") : result.indexOf("reach");
+
+        const storyPartsEspecificsVisualization = result[positionStories + 2]?.includes('interacoes') || result[positionStories + 2]?.includes('interactions');
+        const storyPartsEspecificsAlcance =
+            (result[positionAlcanceStories + 3]?.includes('contas') || result[positionAlcanceStories + 3]?.includes('accounts')) &&
+            (result[positionAlcanceStories + 4]?.includes('alcancadas') || result[positionAlcanceStories + 4]?.includes('reached'));
 
         // Validação dos dados de acordo com texto extraído
         if (result.includes('insights') && result.includes('do') && result.includes('reel') || result.includes('interacoes') && result.includes('do') && result.includes('reel')) {
@@ -183,18 +191,35 @@ const UploadFiles: React.FC = () => {
             // Extrair outros dados específicos do Reels
         } else if (storyPartsEspecificsVisualization || storyPartsEspecificsAlcance ||
             result.includes('story') ||
-            (result.includes('interacoes') && result.includes('com') && result.includes('stories')) ||
-            (result.includes('proximo') && result.includes('story')) ||
-            (result.includes('toques') && result.includes('em') && result.includes('figurinhas'))
+            result.includes('stories') ||
+            (result.includes('interacoes') || result.includes('interactions')) &&
+            (result.includes('com') || result.includes('with')) &&
+            (result.includes('stories')) ||
+            (result.includes('proximo') || result.includes('next')) &&
+            (result.includes('story')) ||
+            (result.includes('toques') || result.includes('taps')) &&
+            (result.includes('em') || result.includes('on')) &&
+            (result.includes('figurinhas') || result.includes('stickers'))
         ) {
             extractedInfo.Plataforma = 'Instagram';
             extractedInfo.Formato = 'Story';
 
-            if (!result.includes('avanco') ||
-                (!result.includes('atividade') && !result.includes('do') && !result.includes('perfil')) ||
-                (!result.includes('visao') && !result.includes('geral')) ||
-                !result.includes('respostas')) {
-                extractedInfo.print_cortado = true
+            // if (!result.includes('avanco') ||
+            //     (!result.includes('atividade') && !result.includes('do') && !result.includes('perfil')) ||
+            //     (!result.includes('visao') && !result.includes('geral')) ||
+            //     !result.includes('respostas')) {
+            //     extractedInfo.print_cortado = true
+            // }
+
+            // Verificação de print cortado
+            if (!result.includes('avanco') && !result.includes('advance') ||
+                (!result.includes('atividade') && !result.includes('activity')) &&
+                (!result.includes('do') && !result.includes('of')) &&
+                (!result.includes('perfil') && !result.includes('profile')) ||
+                (!result.includes('visao') && !result.includes('overview')) &&
+                (!result.includes('geral') && !result.includes('general')) ||
+                !result.includes('respostas') && !result.includes('replies')) {
+                extractedInfo.print_cortado = true;
             }
             // Extrair outros dados específicos do Story
         } else if (result.includes('insights') && (result.includes('da') && result.includes('publicacao') || result.includes('dapublicao') || result.includes('publicao')) && !result.includes('reacoes')) {
