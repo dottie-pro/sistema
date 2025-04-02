@@ -8,5 +8,5 @@ export default function App({ Component, pageProps }: AppProps) {
     <AppProvider>
       <PagesRoute Component={Component} pageProps={pageProps} />
     </AppProvider>
-  )
+  );
 }
