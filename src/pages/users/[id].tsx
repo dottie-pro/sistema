@@ -5,7 +5,7 @@ import { api } from "@/helpers/api";
 import { NewUserDataObject } from "@/helpers/types";
 import { useRouter } from "next/router";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { LogoPreviewer } from "./components/LogoPreviewer";
+import LogoPreviewer from "./components/LogoPreviewer";
 
 type Logo = {
   _id: string;
