@@ -465,9 +465,15 @@ const UserEdit: React.FC = () => {
             </button>
           )}
         </div>
-        <h1 className="text-gray-900 text-2xl font-bold mt-8 mb-4">
+        <h1 className="text-gray-900 text-2xl font-bold mt-8 mb-2">
           Logomarca Customizada
         </h1>
+
+        <p className="text-gray-500 text-sm mb-4">
+          Sabia que você pode mudar a marca que aparece no painel da dottie? É
+          só subir a marca da sua empresa, salvar, atualizar a página e pronto,
+          a dottie fica com a cara da sua empresa!
+        </p>
 
         <div className="flex flex-col gap-4">
           <h1 className="text-gray-900 text-sm font-bold">
