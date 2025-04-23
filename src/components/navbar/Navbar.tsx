@@ -3,6 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { PayingNotPermission } from "../payingNotPermissions";
+import { api } from "@/helpers/api";
+import { Spinner } from "../spinner/Spinner";
 interface MenuItem {
   id: string;
   title: string;
@@ -20,12 +22,24 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { userData, logout, isPayingPermission } = useAppContext();
+  const [logo, setLogo] = useState<{ url: string } | null>(null);
+  const [logoLoading, setLogoLoading] = useState<boolean>(false);
   const router = useRouter();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dropMenuRef = useRef<HTMLDivElement>(null);
 
   const toggleUserMenu = () => {
     setIsUserMenuOpen(!isUserMenuOpen);
+  };
+
+  const getLogo = async () => {
+    setLogoLoading(true);
+    const response = await api.get(`/user/logo`);
+    const { success, logo: responseLogo } = response?.data;
+    if (success && responseLogo) {
+      setLogo(responseLogo);
+    }
+    setLogoLoading(false);
   };
 
   useEffect(() => {
@@ -41,6 +55,10 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
     };
 
     document.addEventListener("mousedown", handleClickOutSide);
+
+    if (userData) {
+      getLogo();
+    }
 
     return () => {
       document.addEventListener("mousedown", handleClickOutSide);
@@ -58,16 +76,24 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
         <div className="flex items-center justify-between py-4 px-8">
           <div className="flex items-center">
             <div className="flex items-center px-2 py-2 gap-2">
-              <img
-                src="/icons/avatar-dottie.png"
-                className="h-6 me-3 sm:h-12"
-                alt="Flowbite Logo"
-              />
-              <img
-                src="/icons/logo-dottie.png"
-                className="h-3 me-2 sm:h-5"
-                alt="Flowbite Logo"
-              />
+              {logoLoading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <img
+                    src={logo ? logo.url : "/icons/avatar-dottie.png"}
+                    className="h-6 me-3 sm:h-12"
+                    alt="Flowbite Logo"
+                  />
+                  {!logo && (
+                    <img
+                      src="/icons/logo-dottie.png"
+                      className="h-3 me-2 sm:h-5"
+                      alt="Flowbite Logo"
+                    />
+                  )}
+                </>
+              )}
             </div>
 
             <ul className="font-medium flex gap-2 ml-32">
