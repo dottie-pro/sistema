@@ -149,6 +149,13 @@ const UserEdit: React.FC = () => {
         });
         return;
       }
+      setAlertData({
+        active: true,
+        title: "Logomarca atualizada!",
+        message:
+          "Logomarca atualizada com sucesso! Atualize a página para ver a alteração.",
+        type: "success",
+      });
       setLogo(responseLogo);
       setLogoFile(null);
     } catch (error) {
