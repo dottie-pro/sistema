@@ -6,7 +6,7 @@ interface LogoPreviewerProps {
   getLogoLoading: boolean;
 }
 
-export const LogoPreviewer: React.FC<LogoPreviewerProps> = ({
+const LogoPreviewer: React.FC<LogoPreviewerProps> = ({
   logo,
   previousLogo,
   getLogoLoading,
@@ -62,3 +62,5 @@ export const LogoPreviewer: React.FC<LogoPreviewerProps> = ({
     </div>
   );
 };
+
+export default LogoPreviewer;
