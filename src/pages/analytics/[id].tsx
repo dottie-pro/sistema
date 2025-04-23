@@ -63,50 +63,6 @@ const AnalyticsEdit: React.FC = () => {
   const newAnalytics = id === "new";
   const { setAlertData, userData, loading, setLoading } = useAppContext();
 
-  const handleFileUpload = async (
-    file: FileWithPreview,
-    analyticsId: string
-  ) => {
-    const fileData = file.file;
-    const formData = new FormData();
-    formData?.append("file", fileData, encodeURIComponent(fileData?.name));
-
-    try {
-      const response = await api.post(
-        `/file/upload?analyticsId=${analyticsId}`,
-        formData
-      );
-      console.log(response);
-      return true;
-    } catch (error) {
-      console.error("Erro no upload:", error);
-      return false;
-    }
-  };
-
-  const handleAddFile = (file: File) => {
-    const filePreview = URL.createObjectURL(file);
-    setNewFiles((prevFiles) => [...prevFiles, { file, preview: filePreview }]);
-  };
-
-  const handleCustomers = async () => {
-    setLoading(true);
-    try {
-      const response = await api.get(
-        `customer/list/filter?name=${customerName}`
-      );
-      const { success } = response.data;
-      if (success) setCustomers(response.data.customers);
-
-      console.log("Dados extraídos:", response.data);
-    } catch (error) {
-      console.log(error);
-      return error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     setAnalyticsData((prevValues) => ({
       ...prevValues,
