@@ -96,7 +96,7 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
               )}
             </div>
 
-            <div className="px-2 py-1 bg-blue-500 rounded-lg">
+            <div className="px-2 py-1 bg-blue-500 rounded-lg text-xs">
               <Link href="/upgrade" className="text-white hover:opacity-50">
                 Free Trial
               </Link>
