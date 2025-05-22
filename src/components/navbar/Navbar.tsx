@@ -95,12 +95,13 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
                 </>
               )}
             </div>
-
-            <div className="px-2 py-1 bg-blue-500 rounded-lg text-xs">
-              <Link href="/upgrade" className="text-white hover:opacity-50">
-                Free Trial
-              </Link>
-            </div>
+            {!userData.paying && (
+              <div className="px-2 py-1 bg-blue-500 rounded-lg text-xs">
+                <Link href="/upgrade" className="text-white hover:opacity-50">
+                  Free Trial
+                </Link>
+              </div>
+            )}
 
             <ul className="font-medium flex gap-2 ml-32">
               {menu.map((menuItem) => {
