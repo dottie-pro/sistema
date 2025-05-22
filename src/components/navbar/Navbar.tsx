@@ -2,7 +2,7 @@ import { useAppContext } from "@/context/AppContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { PayingNotPermission } from "../payingNotPermissions";
+// import { PayingNotPermission } from "../payingNotPermissions";
 import { api } from "@/helpers/api";
 import { Spinner } from "../spinner/Spinner";
 interface MenuItem {
@@ -67,10 +67,10 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
 
   return (
     <>
-      <PayingNotPermission
+      {/* <PayingNotPermission
         isPayingPermission={isPayingPermission}
         userId={userData._id}
-      />
+      /> */}
 
       <nav className="bg-white w-full border-gray-200 dark:bg-white fixed z-[100000] shadow-lg">
         <div className="flex items-center justify-between py-4 px-8">
@@ -94,6 +94,12 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
                   )}
                 </>
               )}
+            </div>
+
+            <div className="px-2 py-1 bg-blue-500 rounded-lg">
+              <Link href="/upgrade" className="text-white hover:opacity-50">
+                Free Trial
+              </Link>
             </div>
 
             <ul className="font-medium flex gap-2 ml-32">
@@ -128,7 +134,12 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
           </div>
 
           {userData ? (
-            <div className="flex gap-2 w-100">
+            <div className="flex gap-2">
+              {!userData.paying && (
+                <span className="text-white bg-blue-500 self-center rounded px-2 py-1 font-sans text-xs">
+                  Você possui {userData.remaining_credits} créditos
+                </span>
+              )}
               <button
                 className="text-white flex py-2 px-4 rounded bg-[#FF6700] align-center justify-center rounded-lg"
                 onClick={() => router.push("/upload-files")}
@@ -159,10 +170,17 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
                         {userData?.name || "Marcus Silva"}
                       </span>
                     </div>
-                    <ul
-                      className="py-2"
-                      onClick={() => setIsUserMenuOpen(false)}
-                    >
+                    <ul className="" onClick={() => setIsUserMenuOpen(false)}>
+                      {!userData.paying && (
+                        <li>
+                          <Link
+                            href="/upgrade"
+                            className="block px-4 py-2 text-sm bg-primary rounded-lg text-white hover:bg-opacity-50"
+                          >
+                            Assinatura Pro
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <Link
                           href="/dashboard"

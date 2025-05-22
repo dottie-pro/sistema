@@ -6,17 +6,19 @@ import React, { ReactNode, useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
-    router.push('/dashboard')
-  }, [])
+    router.push("/dashboard");
+  }, []);
 
   return (
     <Body>
-      <div className="flex flex-col gap-4 w-full pt-24 justify-start h-full" >
-        <h1 className="text-gray-700 font-light text-2xl text-center">Consolide os Resultados de Suas Campanhas
-          Com Influenciadores em Três Passos</h1>
+      <div className="flex flex-col gap-4 w-full pt-24 justify-start h-full">
+        <h1 className="text-gray-700 font-light text-2xl text-center">
+          Consolide os Resultados de Suas Campanhas Com Influenciadores em Três
+          Passos
+        </h1>
       </div>
     </Body>
   );

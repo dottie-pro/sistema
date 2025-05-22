@@ -8,6 +8,7 @@ import Footer from "./components/footer/Footer";
 import axios, { AxiosProgressEvent, AxiosResponse } from "axios";
 import { api } from "@/helpers/api";
 import { Modal } from "@/components";
+import { PayingNotPermission } from "@/components/payingNotPermissions";
 
 export interface FileWithPreview {
   file: File;
@@ -42,7 +43,7 @@ interface ProgressUpload {
 }
 
 const UploadFiles: React.FC = () => {
-  const { setLoading, userData, setAlertData } = useAppContext();
+  const { setLoading, userData, setAlertData, setUserData } = useAppContext();
   const [newFiles, setNewFiles] = useState<FileWithPreview[]>([]);
   const [showFormFiles, setShowFormFiles] = useState<boolean>(false);
   const [fileSelected, setFileSelected] = useState<string>("");
@@ -522,6 +523,9 @@ const UploadFiles: React.FC = () => {
       setLoadingData(true);
       setUploadProgress({});
 
+      const uniqueGroupCount = new Set(newFiles.map((file) => file.groupKey))
+        .size;
+
       let textDataIds: string[] = [];
 
       try {
@@ -605,6 +609,10 @@ const UploadFiles: React.FC = () => {
             });
 
             setNewFiles([]);
+            setUserData({
+              ...userData,
+              remaining_credits: userData.remaining_credits - uniqueGroupCount,
+            });
             return true;
           } else {
             setAlertData({
@@ -661,9 +669,22 @@ const UploadFiles: React.FC = () => {
 
   const handleGroupFiles = () => {
     try {
+      if (!userData?.paying && userData?.remaining_credits <= 1) {
+        const uniqueGroupCount = new Set(newFiles.map((file) => file.groupKey))
+          .size;
+        if (uniqueGroupCount > userData?.remaining_credits) {
+          setAlertData({
+            active: true,
+            title: "Atenção!",
+            message: `Você não possui créditos suficientes para ${uniqueGroupCount} publicações. Faça o upgrade ou aguarde a renovação dos seus créditos.`,
+            type: "alert",
+          });
+          return;
+        }
+      }
       setLoading(true);
-
       const selectedFiles = newFiles.filter((file) => file.selected);
+
       if (selectedFiles.length > 1) {
         const groupKey = generateRandomId();
         const groupKeyColor = getRandomColor();
@@ -711,6 +732,10 @@ const UploadFiles: React.FC = () => {
 
   return (
     <div className={`relative`}>
+      <PayingNotPermission
+        isPayingPermission={userData?.paying || userData?.remaining_credits > 0}
+        userId={userData?._id}
+      />
       {loadingData &&
         messageProgress && ( // Mostra apenas se estiver carregando e se houver um arquivo atual
           <div className="absolute w-full flex flex-col items-center justify-center h-screen">
