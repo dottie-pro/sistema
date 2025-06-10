@@ -43,12 +43,6 @@ const FormDetailsFile: React.FC<FormsProps> = ({
     { label: "Post", value: "Post" },
   ];
 
-  const type = [
-    { label: "Alimentação", value: "alimentação" },
-    { label: "Ofertas", value: "Ofertas" },
-    { label: "Divulgação de produtos", value: "Divulgação de produtos" },
-  ];
-
   return (
     <div className="flex flex-col gap-2 rounded-pill bg-white shadow rounded-lg fixed right-0 top-32 w-96">
       <div className="bg-gray-200 flex px-2 w-full gap-2 items-center">
@@ -162,11 +156,14 @@ const FormDetailsFile: React.FC<FormsProps> = ({
           >
             Categoria
           </label>
-          <Dropdown
-            title="Selecione uma opção"
-            options={type}
-            onSelect={(value) => handleChange("type", value)}
+          <input
+            type="text"
+            name="type"
             value={fileSelected?.type}
+            onChange={onChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            placeholder="Categoria"
+            required
           />
         </div>
 
