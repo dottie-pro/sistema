@@ -231,7 +231,9 @@ const UploadFiles: React.FC = () => {
         result.includes("story")) ||
       ((result.includes("toques") || result.includes("taps")) &&
         (result.includes("em") || result.includes("on")) &&
-        (result.includes("figurinhas") || result.includes("stickers")))
+        (result.includes("figurinhas") || result.includes("stickers"))) ||
+      result.includes("respostas") ||
+      result.includes("replies")
     ) {
       extractedInfo.Plataforma = "Instagram";
       extractedInfo.Formato = "Story";
