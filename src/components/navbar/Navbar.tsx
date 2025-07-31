@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
         userId={userData._id}
       /> */}
 
-      <nav className="bg-white w-full border-gray-200 dark:bg-white fixed z-[100000] shadow-lg">
+      <nav className="bg-white w-full border-gray-200 dark:bg-white fixed z-[10000] shadow-sm">
         <div className="flex items-center justify-between py-4 px-8">
           <div className="flex items-center">
             <div className="flex items-center px-2 py-2 gap-2">
@@ -146,6 +146,13 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
                 onClick={() => router.push("/upload-files")}
               >
                 <span className="text-white">Subir imagens</span>
+              </button>
+
+              <button
+                className="text-white flex py-2 px-4 bg-[#FF6700] align-center justify-center rounded-lg"
+                onClick={() => router.push("/upload-files-new")}
+              >
+                <span className="text-white">Subir imagens Novo</span>
               </button>
 
               <div className="relative">
@@ -222,14 +229,14 @@ export const Navbar: React.FC<NavbarProps> = ({ menu }) => {
           ) : (
             <div className="flex gap-2 w-100">
               <button
-                className="flex py-2 px-4 rounded border rounded-lg border-black align-center justify-center"
+                className="flex py-2 px-4 border rounded-lg border-black align-center justify-center"
                 onClick={() => router.push("/authentication")}
               >
                 <span className="text-gray-800">Entrar</span>
               </button>
 
               <button
-                className="text-white flex py-2 px-4 rounded bg-[#FF6700] align-center justify-center rounded-lg"
+                className="text-white flex py-2 px-4 bg-[#FF6700] align-center justify-center rounded-lg"
                 onClick={() => router.push("/register")}
               >
                 <span className="text-white">Começe Grátis</span>
