@@ -84,6 +84,7 @@ export interface FilesAnalyticsObjectData {
   salvamentos: number;
   compartilhamentos: number;
   comentarios: number;
+  repostagens: number;
   data_publicacao: string;
   userId: string;
   files: FilesFromAnalytics[] | [];

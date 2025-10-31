@@ -54,6 +54,7 @@ const AnalyticsEdit: React.FC = () => {
     salvamentos: 0,
     compartilhamentos: 0,
     comentarios: 0,
+    repostagens: 0,
     data_publicacao: "",
     userId: "",
     files: [],
@@ -285,7 +286,12 @@ const AnalyticsEdit: React.FC = () => {
               {analyticsData.comentarios || 0}
             </span>
           </div>
-
+          <div className="flex gap-2 rounded-md bg-gray-200 py-3 px-3">
+            <span className="text-gray-700">Repostagens:</span>
+            <span className="text-gray-700 font-bold">
+              {analyticsData.repostagens || 0}
+            </span>
+          </div>
           <div className="flex gap-2 rounded-md bg-gray-200 py-3 px-3">
             <span className="text-gray-700">Data de Publicação:</span>
             <span className="text-gray-700 font-bold">
